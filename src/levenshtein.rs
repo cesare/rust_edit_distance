@@ -3,18 +3,18 @@ use ndarray::prelude::*;
 use std::cmp::min;
 
 #[derive(Debug)]
-pub struct Levenshtein {
+pub struct Levenshtein<T: Eq + Clone> {
     matrix: Array2<u32>,
-    a: Vec<char>,
-    b: Vec<char>,
+    a: Vec<T>,
+    b: Vec<T>,
     dim_a: usize,
     dim_b: usize,
 }
 
-impl Levenshtein {
-    pub fn new(a: &String, b: &String) -> Levenshtein {
-        let vec_a: Vec<char> = a.chars().collect();
-        let vec_b: Vec<char> = b.chars().collect();
+impl<T: Eq + Clone> Levenshtein<T> {
+    pub fn new(a: &Vec<T>, b: &Vec<T>) -> Levenshtein<T> {
+        let vec_a = a.clone();
+        let vec_b = b.clone();
 
         let dim_a = vec_a.len() + 1;
         let dim_b = vec_b.len() + 1;
@@ -29,8 +29,8 @@ impl Levenshtein {
 
         Levenshtein {
             matrix: matrix,
-            a: vec_a,
-            b: vec_b,
+            a: vec_a.to_vec(),
+            b: vec_b.to_vec(),
             dim_a: dim_a,
             dim_b: dim_b,
         }
