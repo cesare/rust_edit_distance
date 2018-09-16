@@ -8,3 +8,4 @@ name = "levenshtein_distance"
 path = "src/bin/levenshtein_distance.rs"
 
 [dependencies]
+ndarray = "0.12.0"
