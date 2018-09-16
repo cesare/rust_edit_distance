@@ -3,4 +3,8 @@ name = "edit_distance"
 version = "0.1.0"
 authors = ["SAWADA Tadashi <cesare@mayverse.jp>"]
 
+[[bin]]
+name = "levenshtein_distance"
+path = "src/bin/levenshtein_distance.rs"
+
 [dependencies]
