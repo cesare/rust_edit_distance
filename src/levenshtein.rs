@@ -59,3 +59,11 @@ fn min3(a: u32, b: u32, c: u32) -> u32 {
     let s = min(a, b);
     min(s, c)
 }
+
+pub fn distance(a: &String, b: &String) -> u32 {
+    let vec_a: Vec<char> = a.chars().collect();
+    let vec_b: Vec<char> = b.chars().collect();
+
+    let mut l = Levenshtein::new(&vec_a, &vec_b);
+    l.distance()
+}
