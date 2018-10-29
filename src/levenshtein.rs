@@ -67,3 +67,108 @@ pub fn distance(a: &String, b: &String) -> u32 {
     let mut l = Levenshtein::new(&vec_a, &vec_b);
     l.distance()
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//
+// tests
+//
+
+#[test]
+fn test_distance_between_identical_strings() {
+    let string1 = "test for echo".to_string();
+    let string2 = "test for echo".to_string();
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, 0);
+}
+
+#[test]
+fn test_distance_against_one_char_longer() {
+    let string1 = "test for echo".to_string();
+    let string2 = "test for echo1".to_string();
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, 1);
+}
+
+#[test]
+fn test_distance_against_one_char_shorter() {
+    let string1 = "test for echo".to_string();
+    let string2 = "test for ech".to_string();
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, 1);
+}
+
+#[test]
+fn test_distance_between_empty_one_and_non_empty_one() {
+    let string1 = "".to_string();
+    let string2 = "test for echo".to_string();
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, string2.len() as u32);
+}
+
+#[test]
+fn test_distance_between_non_empty_one_and_empty_one() {
+    let string1 = "test for echo".to_string();
+    let string2 = "".to_string();
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, string1.len() as u32);
+}
+
+#[test]
+fn test_distance_against_one_with_additional_chars_in_the_middle() {
+    let string1 = "test for echo".to_string();
+    let string2 = "test for an echo".to_string();  // add 3 chars: "an "
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, 3);
+}
+
+#[test]
+fn test_distance_against_one_with_removing_some_chars() {
+    let string1 = "test for echo".to_string();
+    let string2 = "testforecho".to_string();  // remove 2 whitespaces
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, 2);
+}
+
+#[test]
+fn test_distance_against_one_with_changing_some_chars() {
+    let string1 = "test for echo".to_string();
+    let string2 = "Test For Echo".to_string();  // change 3 charactors into upper-case
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, 3);
+}
+
+#[test]
+fn test_distance_against_different_one() {
+    let string1 = "test for echo".to_string();
+    let string2 = "test 123".to_string();  // remove 5 chars " echo", and replace 3 chars "for" into "123"
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, 8);
+}
+
+#[test]
+fn test_distance_against_one_without_common_prefix() {
+    let string1 = "test for echo".to_string();
+    let string2 = "for echo".to_string();  // remove prefix "test "
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, 5);
+}
+
+#[test]
+fn test_distance_between_non_ascii_strings() {
+    let string1 = "テストです".to_string();
+    let string2 = "テストだよ".to_string();  // replace 2 chars "です" into "だよ"
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, 2);
+}
