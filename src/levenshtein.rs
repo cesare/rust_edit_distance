@@ -75,6 +75,15 @@ pub fn distance(a: &String, b: &String) -> u32 {
 //
 
 #[test]
+fn test_distance_between_empty_strings() {
+    let string1 = "".to_string();
+    let string2 = "".to_string();
+
+    let d = distance(&string1, &string2);
+    assert_eq!(d, 0);
+}
+
+#[test]
 fn test_distance_between_identical_strings() {
     let string1 = "test for echo".to_string();
     let string2 = "test for echo".to_string();
